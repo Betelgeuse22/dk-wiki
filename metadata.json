@@ -1,0 +1,6 @@
+{
+  "name": "Дк. (Двухъярусная клетка) — Wiki",
+  "description": "Интерактивный прототип официального Wiki-сайта для визуальной новеллы «Дк. (Двухъярусная клетка)» в формате Telegram Mini App.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
