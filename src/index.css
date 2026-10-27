@@ -14,32 +14,23 @@
 
   /* Театральная палитра: холодный голубой, софиты и сценический индиго */
   --vn-blue-soft: #e3f2fd;
-  /* Нежно-голубой фон диалогов */
   --vn-blue-light: #f0f7ff;
-  /* Светлый фон кнопок выбора */
   --vn-blue-accent: #38bdf8;
-  /* Неоновый сценический голубой для рамок */
   --vn-blue-deep: #0284c7;
-  /* Насыщенный синий (софиты / кнопки) */
   --vn-blue-dark: #0f3460;
-  /* Глубокий сценический индиго для плашек имен */
   --vn-blue-hover: #dbeafe;
-  /* Ховер для кнопок */
   --vn-stage-stars: rgba(56, 189, 248, 0.28);
-  /* Софиты / звёзды на фоне диалогов */
   --vn-blue-alert: #e11d48;
-  /* Акцент для плашек предупреждений (рубиновый свет рампы) */
 
   /* Текст и контраст */
   --vn-text-main: #0c1b2a;
-  /* Чёткий тёмно-синий текст для чтения */
   --vn-text-muted: #475569;
-  /* Приглушённый текст */
   --vn-text-white: #ffffff;
-  /* Белый текст на плашках */
 
   /* Рамки и тени */
-  --vn-border-white: 3px solid #ffffff;
+  --vn-border-color-white: #ffffff;
+  /* Динамический цвет для белых рамок */
+  --vn-border-white: 3px solid var(--vn-border-color-white);
   --vn-border-blue: 2px solid var(--vn-blue-accent);
   --vn-radius-dialog: 16px;
   --vn-radius-tag: 10px 10px 0 0;
@@ -47,13 +38,60 @@
   --vn-shadow-btn: 0 4px 12px rgba(56, 189, 248, 0.2);
   --vn-shadow-btn-hover: 0 6px 18px rgba(56, 189, 248, 0.4);
 
-  /* Контейнер страницы (Mobile-First / Telegram Mini App) */
+  /* Контейнер страницы */
   --app-max-width: 520px;
   --app-bg-surface: #f8fafc;
   --app-outer-border: 2px solid rgba(255, 255, 255, 0.85);
 
-  /* Фоновый градиент экрана (Тёмный зрительный зал и свет сцены) */
+  /* Фоновый градиент экрана */
   --screen-bg-gradient: linear-gradient(135deg, #090d16 0%, #0f172a 40%, #162447 75%, #0d1b2a 100%);
+
+  /* Блоки и карточки */
+  --vn-bg-block: #ffffff;
+  --vn-bg-status: #ffffff;
+  --vn-border-subtle: #e2e8f0;
+  --vn-bg-card: #ffffff;
+  --vn-bg-card-inner: #f8fafc;
+  --vn-border-card: #ffffff;
+  --vn-gradient-dossier: linear-gradient(180deg, #f0f7ff 0%, #ffffff 60%);
+}
+
+/* ==========================================================================
+   ТЁМНАЯ ТЕМА (DARK MODE)
+   ========================================================================== */
+[data-theme="dark"] {
+  /* Тёмный фон зрительного зала */
+  --app-bg-surface: #0b1120;
+  --app-outer-border: 2px solid rgba(255, 255, 255, 0.1);
+  --screen-bg-gradient: linear-gradient(135deg, #05080f 0%, #091122 40%, #060d1a 100%);
+
+  /* Сценические цвета приглушены, неон ярче */
+  --vn-blue-soft: #111827;
+  --vn-blue-light: #1e293b;
+  --vn-blue-accent: #0ea5e9;
+  --vn-blue-deep: #38bdf8;
+  --vn-blue-dark: #0f172a;
+  --vn-blue-hover: #334155;
+
+  /* Текст */
+  --vn-text-main: #f8fafc;
+  --vn-text-muted: #94a3b8;
+  --vn-text-white: #ffffff;
+
+  /* Рамки и тени */
+  --vn-border-color-white: #1e293b;
+  /* В тёмной теме белые рамки становятся тёмными */
+  --vn-border-white: 3px solid var(--vn-border-color-white);
+  --vn-border-blue: 2px solid var(--vn-blue-accent);
+
+  /* Блоки и карточки */
+  --vn-bg-block: rgba(15, 23, 42, 0.95);
+  --vn-bg-status: #090d16;
+  --vn-border-subtle: #1e293b;
+  --vn-bg-card: #0f172a;
+  --vn-bg-card-inner: #1e293b;
+  --vn-border-card: #1e293b;
+  --vn-gradient-dossier: linear-gradient(180deg, #0f172a 0%, #1e293b 100%);
 }
 
 /* ==========================================================================
@@ -86,7 +124,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Стилизация скроллбара */
@@ -120,7 +158,7 @@ body {
   flex-direction: column;
   align-items: stretch;
   position: relative;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* Верхняя строка статуса Telegram Mini App */
@@ -129,8 +167,8 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 8px 16px;
-  background: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
+  background: var(--vn-bg-status);
+  border-bottom: 1px solid var(--vn-border-subtle);
   font-size: 11px;
   color: var(--vn-text-muted);
   font-weight: 600;
@@ -151,7 +189,7 @@ body {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: rgba(255, 255, 255, 0.95);
+  background: var(--vn-bg-block);
   backdrop-filter: blur(8px);
   border-bottom: 2px solid var(--vn-blue-accent);
   padding: 12px 16px;
@@ -234,9 +272,9 @@ body {
   letter-spacing: 0.3px;
   padding: 5px 16px 4px 16px;
   border-radius: var(--vn-radius-tag);
-  border-top: 2px solid #ffffff;
-  border-left: 2px solid #ffffff;
-  border-right: 2px solid #ffffff;
+  border-top: 2px solid var(--vn-border-color-white);
+  border-left: 2px solid var(--vn-border-color-white);
+  border-right: 2px solid var(--vn-border-color-white);
   margin-left: 14px;
   position: relative;
   z-index: 2;
@@ -248,7 +286,7 @@ body {
 }
 
 .dialogue-nameplate.white-tag {
-  background: #ffffff;
+  background: var(--vn-bg-block);
   color: var(--vn-blue-deep);
   border-top: 2px solid var(--vn-blue-accent);
   border-left: 2px solid var(--vn-blue-accent);
@@ -275,8 +313,8 @@ body {
 }
 
 .dialogue-box.highlight {
-  background-color: #e0f2fe;
-  border-color: #ffffff;
+  background-color: var(--vn-bg-card-inner);
+  border-color: var(--vn-border-color-white);
 }
 
 /* Декоративная полоса новеллы снизу */
@@ -345,12 +383,12 @@ body {
 }
 
 .vn-choice-btn.primary {
-  background: #ffffff;
+  background: var(--vn-bg-block);
   border-color: var(--vn-blue-accent);
 }
 
 .vn-choice-btn.active {
-  background: #e0f2fe;
+  background: var(--vn-bg-card-inner);
   border-color: var(--vn-blue-deep);
   box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.2);
 }
@@ -368,9 +406,9 @@ body {
   width: 28px;
   height: 28px;
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--vn-bg-card);
   color: var(--vn-blue-deep);
-  border: 1px solid #bae6fd;
+  border: 1px solid var(--vn-border-subtle);
   font-size: 13px;
   flex-shrink: 0;
 }
@@ -463,7 +501,7 @@ body {
 
 /* Переключатель раскрытия длинного текста истории */
 .toggle-history-btn {
-  background: #ffffff;
+  background: var(--vn-bg-block);
   border: 2px solid var(--vn-blue-accent);
   color: var(--vn-blue-deep);
   font-family: var(--font-family-display);
@@ -503,7 +541,7 @@ body {
 .characters-search-bar {
   display: flex;
   align-items: center;
-  background: #ffffff;
+  background: var(--vn-bg-card);
   border: 2px solid var(--vn-blue-accent);
   border-radius: 12px;
   padding: 8px 14px;
@@ -544,16 +582,14 @@ body {
   gap: 10px;
   cursor: pointer;
   text-align: left;
-  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1),
-    box-shadow 0.18s ease,
-    background-color 0.18s ease;
+  transition: transform 0.18s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.18s ease, background-color 0.18s ease;
   box-shadow: var(--vn-shadow-btn);
   position: relative;
   overflow: hidden;
 }
 
 .char-choice-card:hover {
-  background: #ffffff;
+  background: var(--vn-bg-block);
   transform: translateY(-3px) scale(1.02);
   box-shadow: var(--vn-shadow-btn-hover);
   border-color: var(--vn-blue-deep);
@@ -570,8 +606,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #ffffff;
-  border: 2px solid #ffffff;
+  background: var(--vn-bg-card);
+  border: 2px solid var(--vn-border-color-white);
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   flex-shrink: 0;
   position: relative;
@@ -611,7 +647,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  /* Растягивает дочерние блоки на 100% */
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -621,7 +656,7 @@ body {
 }
 
 .back-to-list-btn {
-  background: #ffffff;
+  background: var(--vn-bg-block);
   border: 2px solid var(--vn-blue-accent);
   color: var(--vn-blue-deep);
   font-family: var(--font-family-display);
@@ -644,8 +679,8 @@ body {
 
 .dossier-art-card {
   width: 100%;
-  background: #ffffff;
-  border: 3px solid #ffffff;
+  background: var(--vn-bg-card);
+  border: 3px solid var(--vn-border-color-white);
   border-radius: 16px;
   box-shadow: var(--vn-shadow-soft);
   padding: 20px 16px;
@@ -655,14 +690,14 @@ body {
   text-align: center;
   position: relative;
   overflow: hidden;
-  background-image: linear-gradient(180deg, #f0f7ff 0%, #ffffff 60%);
+  background-image: var(--vn-gradient-dossier);
 }
 
 .dossier-portrait-wrap {
   width: 140px;
   height: 140px;
   border-radius: 24px;
-  background: #ffffff;
+  background: var(--vn-bg-card);
   border: 4px solid var(--vn-blue-accent);
   display: flex;
   align-items: center;
@@ -726,8 +761,8 @@ body {
 }
 
 .gallery-card {
-  background: #ffffff;
-  border: 3px solid #ffffff;
+  background: var(--vn-bg-card);
+  border: 3px solid var(--vn-border-card);
   border-radius: 14px;
   box-shadow: var(--vn-shadow-soft);
   overflow: hidden;
@@ -749,7 +784,14 @@ body {
   align-items: center;
   justify-content: center;
   position: relative;
-  background-color: #e0f2fe;
+  background-color: var(--vn-bg-card-inner);
+}
+
+/* Исправление инлайн-стилей для плашек на миниатюрах галереи (Скриншот 4) */
+.gallery-thumbnail>span {
+  background: var(--vn-bg-block) !important;
+  color: var(--vn-text-main) !important;
+  border: 1px solid var(--vn-border-subtle) !important;
 }
 
 .gallery-card-body {
@@ -784,8 +826,8 @@ body {
 }
 
 .ending-card-box {
-  background: #ffffff;
-  border: 3px solid #ffffff;
+  background: var(--vn-bg-card);
+  border: 3px solid var(--vn-border-card);
   border-radius: 16px;
   box-shadow: var(--vn-shadow-soft);
   padding: 16px;
@@ -820,7 +862,7 @@ body {
 }
 
 .ending-condition-box {
-  background: #f8fafc;
+  background: var(--vn-bg-card-inner);
   border-left: 3px solid var(--vn-blue-accent);
   padding: 8px 12px;
   font-size: 12.5px;
@@ -855,7 +897,7 @@ body {
   background-color: var(--vn-blue-soft);
   background-image: url("data:image/svg+xml,%3Csvg width='32' height='32' viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M16 4 L17.5 13 L26.5 14.5 L17.5 16 L16 25 L14.5 16 L5.5 14.5 L14.5 13 Z' fill='%2338bdf8' fill-opacity='0.16'/%3E%3Ccircle cx='4' cy='4' r='1' fill='%230284c7' fill-opacity='0.12'/%3E%3C/svg%3E");
   background-size: 28px 28px;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--vn-border-color-white);
   border-radius: 12px;
   padding: 14px 16px;
   font-size: 13.5px;
@@ -874,8 +916,8 @@ body {
 }
 
 .fact-item-card {
-  background: #ffffff;
-  border: 2px solid #ffffff;
+  background: var(--vn-bg-card);
+  border: 2px solid var(--vn-border-card);
   border-radius: 14px;
   padding: 14px;
   box-shadow: 0 4px 14px rgba(2, 132, 199, 0.08);
@@ -905,8 +947,8 @@ body {
 }
 
 .team-card {
-  background: #ffffff;
-  border: 2px solid #ffffff;
+  background: var(--vn-bg-card);
+  border: 2px solid var(--vn-border-card);
   border-radius: 14px;
   padding: 14px;
   box-shadow: 0 4px 14px rgba(2, 132, 199, 0.08);
@@ -963,7 +1005,7 @@ body {
    ========================================================================== */
 .app-footer {
   margin-top: auto;
-  background: #ffffff;
+  background: var(--vn-bg-block);
   border-top: 2px solid var(--vn-blue-accent);
   padding: 20px 16px 28px 16px;
   text-align: center;
@@ -1040,8 +1082,8 @@ body {
 .modal-content-panel {
   width: 100%;
   max-width: 440px;
-  background: #ffffff;
-  border: 3px solid #ffffff;
+  background: var(--vn-bg-block);
+  border: 3px solid var(--vn-border-color-white);
   border-radius: 20px;
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
   padding: 20px;

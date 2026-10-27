@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Header } from './components/Header.tsx';
 import { MenuModal, PageId } from './components/MenuModal.tsx';
 import { Footer } from './components/Footer.tsx';
@@ -17,6 +17,24 @@ export default function App() {
   const [currentPage, setCurrentPage] = useState<PageId>('home');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // 1. Добавляем состояние для тёмной темы (с проверкой localStorage)
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    return localStorage.getItem('theme') === 'dark';
+  });
+
+  // 2. Эффект для переключения CSS-переменных при клике
+  useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
+
+  const toggleTheme = () => setIsDarkMode((prev) => !prev);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -49,10 +67,12 @@ export default function App() {
 
   return (
     <div className="app-container">
-      {/* Шапка сайта с кнопкой «☰ Меню» */}
+      {/* 3. Передаём состояние и функцию в шапку сайта */}
       <Header
         onOpenMenu={() => setIsMenuOpen(true)}
         onGoHome={() => handleNavigate('home')}
+        isDarkMode={isDarkMode}
+        onToggleTheme={toggleTheme}
       />
 
       {/* Оверлей меню выбора разделов новеллы */}
