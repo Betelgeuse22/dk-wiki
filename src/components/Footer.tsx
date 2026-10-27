@@ -4,23 +4,25 @@
  */
 
 import React from 'react';
+import { useI18n } from '../i18n.tsx';
 
 export const Footer: React.FC = () => {
+  const { t } = useI18n();
   return (
     <footer className="app-footer">
       <div className="footer-social-title">
-        <span>💌 Официальные каналы проекта:</span>
+        <span>💌 {t.channels}</span>
       </div>
 
       <div className="footer-social-row">
         <a
           href="#telegram"
           className="social-link-btn"
-          title="Официальный Telegram-канал"
+          title={t.telegramTitle}
           target="_blank"
           onClick={(e) => {
             e.preventDefault();
-            alert('Ссылка-заглушка: Здесь будет подключен официальный Telegram-канал проекта «Дк.»!');
+            alert(t.telegramAlert);
           }}
         >
           <span>✈️</span>
@@ -30,7 +32,7 @@ export const Footer: React.FC = () => {
         <a
           href="https://www.tiktok.com/@twotier.cage"
           className="social-link-btn"
-          title="TikTok проекта"
+          title={t.tiktokTitle}
           target="_blank"
         >
           <span>🎵</span>
@@ -40,11 +42,11 @@ export const Footer: React.FC = () => {
         <a
           href="#youtube"
           className="social-link-btn"
-          title="YouTube канал"
+          title={t.youtubeTitle}
           target="_blank"
           onClick={(e) => {
             e.preventDefault();
-            alert('Ссылка-заглушка: Здесь будет подключен YouTube-канал проекта «Дк.» с трейлерами и саундтреком!');
+            alert(t.youtubeAlert);
           }}
         >
           <span>▶️</span>
@@ -53,7 +55,7 @@ export const Footer: React.FC = () => {
       </div>
 
       <div className="footer-copyright">
-        © Официальная Wiki по проекту «Дк. (Двухъярусная клетка)». Все права защищены.
+        {t.copyright}
       </div>
     </footer>
   );

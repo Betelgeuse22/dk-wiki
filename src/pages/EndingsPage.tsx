@@ -4,10 +4,12 @@
  */
 
 import React, { useState } from 'react';
-import { ENDINGS_DATA } from '../data/wikiData.ts';
 import { DialogueBox } from '../components/DialogueBox.tsx';
+import { getLocalizedData, useI18n } from '../i18n.tsx';
 
 export const EndingsPage: React.FC = () => {
+  const { language, t } = useI18n();
+  const { endings } = getLocalizedData(language);
   // Храним ID раскрытых концовок
   const [revealedEndings, setRevealedEndings] = useState<Record<string, boolean>>({});
 
@@ -20,7 +22,7 @@ export const EndingsPage: React.FC = () => {
 
   const revealAll = () => {
     const allRevealed: Record<string, boolean> = {};
-    ENDINGS_DATA.forEach((e) => {
+    endings.forEach((e) => {
       allRevealed[e.id] = true;
     });
     setRevealedEndings(allRevealed);
@@ -33,15 +35,13 @@ export const EndingsPage: React.FC = () => {
   return (
     <div className="page-container">
       {/* Заголовок в стиле плашки новеллы */}
-      <DialogueBox name="Концовки" tagType="default">
+      <DialogueBox name={language === 'en' ? 'Endings' : 'Концовки'} tagType="default">
         <div className="dialogue-text">
           <p>
-            Сюжет «Дк. (Двухъярусная клетка)» вариативен и содержит 4 ключевых финала,
-            зависящих от взаимоотношений героев и принятых Игроком решений.
+            {t.endingsIntro}
           </p>
           <p style={{ marginTop: '6px', fontSize: '13px', color: 'var(--vn-pink-deep)' }}>
-            ⚠️ Внимание! Тексты описаний содержат ключевые сюжетные спойлеры. По умолчанию
-            они заблокированы.
+            {t.spoilersWarning}
           </p>
         </div>
       </DialogueBox>
@@ -60,7 +60,7 @@ export const EndingsPage: React.FC = () => {
           style={{ margin: 0, flex: 1, justifyContent: 'center' }}
           onClick={revealAll}
         >
-          <span>👁️ Раскрыть все спойлеры</span>
+          <span>{t.revealAll}</span>
         </button>
         <button
           type="button"
@@ -68,13 +68,13 @@ export const EndingsPage: React.FC = () => {
           style={{ margin: 0, flex: 1, justifyContent: 'center' }}
           onClick={hideAll}
         >
-          <span>🔒 Скрыть все</span>
+          <span>{t.hideAll}</span>
         </button>
       </div>
 
       {/* Список карточек концовок */}
       <div className="endings-list">
-        {ENDINGS_DATA.map((ending) => {
+        {endings.map((ending) => {
           const isRevealed = !!revealedEndings[ending.id];
 
           return (
@@ -85,7 +85,7 @@ export const EndingsPage: React.FC = () => {
               </div>
 
               <div className="ending-condition-box">
-                <strong>Условие разблокировки: </strong>
+                <strong>{t.unlockCondition} </strong>
                 <span>{ending.condition}</span>
               </div>
 
@@ -95,7 +95,7 @@ export const EndingsPage: React.FC = () => {
                   className="ending-spoiler-toggle"
                   onClick={() => toggleSpoiler(ending.id)}
                 >
-                  <span>🔒 Спойлер! Нажмите, чтобы раскрыть описание концовки</span>
+                  <span>{t.spoilerButton}</span>
                 </button>
               ) : (
                 <div className="ending-revealed-box">
@@ -126,7 +126,7 @@ export const EndingsPage: React.FC = () => {
                     }}
                     onClick={() => toggleSpoiler(ending.id)}
                   >
-                    Скрыть спойлер назад
+                    {t.hideSpoiler}
                   </button>
                 </div>
               )}

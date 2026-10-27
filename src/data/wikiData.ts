@@ -7,8 +7,8 @@ export interface Character {
   id: string;
   name: string;
   role: string;
-  tier: 'Верхний ярус' | 'Нижний ярус' | 'Нейтральная зона' | 'За пределами кода';
-  status: 'Активен' | 'В поиске выхода' | 'Под наблюдением' | 'Особый статус';
+  tier: string;
+  status: string;
   color: string;
   accentColor: string;
   avatarIcon: string; // identifier for SVG rendering
@@ -29,8 +29,8 @@ export interface Ending {
 export interface GalleryItem {
   id: string;
   title: string;
-  category: 'Локация' | 'Концепт' | 'Интерфейс' | 'Персонажи';
-  status: 'в процессе' | 'эскиз' | 'завершено';
+  category: string;
+  status: string;
   description: string;
   aspect: string;
   gradient: string;

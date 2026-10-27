@@ -4,27 +4,27 @@
  */
 
 import React from 'react';
-import { FACTS_DATA, TEAM_DATA } from '../data/wikiData.ts';
 import { DialogueBox } from '../components/DialogueBox.tsx';
+import { getLocalizedData, useI18n } from '../i18n.tsx';
 
 export const AboutPage: React.FC = () => {
+  const { language, t } = useI18n();
+  const { facts, team } = getLocalizedData(language);
   return (
     <div className="page-container">
       {/* Заголовок секции */}
-      <DialogueBox name="О проекте" tagType="default">
+      <DialogueBox name={language === 'en' ? 'About the Project' : 'О проекте'} tagType="default">
         <div className="dialogue-text">
           <p>
-            Добро пожаловать в закулисье визуальной новеллы «Дк. (Двухъярусная клетка)»!
-            Здесь собраны факты о вселенной, вдохновении и людях, воплощающих проект в
-            жизнь.
+            {t.aboutIntro}
           </p>
         </div>
       </DialogueBox>
 
       {/* Блок «Интересные факты о разработке» */}
-      <DialogueBox name="Интересные факты о разработке" tagType="white">
+      <DialogueBox name={t.factsTitle} tagType="white">
         <div className="facts-list">
-          {FACTS_DATA.map((fact) => (
+          {facts.map((fact) => (
             <div key={fact.id} className="fact-item-card">
               <div className="fact-item-title">
                 <span>✦</span>
@@ -37,9 +37,9 @@ export const AboutPage: React.FC = () => {
       </DialogueBox>
 
       {/* Блок «Команда проекта» */}
-      <DialogueBox name="Команда проекта" tagType="default">
+      <DialogueBox name={t.teamTitle} tagType="default">
         <div className="team-list">
-          {TEAM_DATA.map((member) => (
+          {team.map((member) => (
             <div key={member.id} className="team-card">
               <div className="team-avatar-box">
                 <span>{member.avatarText}</span>

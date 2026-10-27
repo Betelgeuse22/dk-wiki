@@ -4,23 +4,25 @@
  */
 
 import React, { useState } from 'react';
-import { CHARACTERS_DATA } from '../data/wikiData.ts';
 import { DialogueBox } from '../components/DialogueBox.tsx';
 import { CharacterAvatar } from '../components/CharacterAvatar.tsx';
+import { getLocalizedData, useI18n } from '../i18n.tsx';
 
 interface CharactersPageProps {
   onToast: (msg: string) => void;
 }
 
 export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
+  const { language, t } = useI18n();
+  const { characters } = getLocalizedData(language);
   const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [tierFilter, setTierFilter] = useState<string>('all');
 
-  const selectedCharacter = CHARACTERS_DATA.find((c) => c.id === selectedCharacterId);
+  const selectedCharacter = characters.find((c) => c.id === selectedCharacterId);
 
   // Фильтрация списка персонажей
-  const filteredCharacters = CHARACTERS_DATA.filter((char) => {
+  const filteredCharacters = characters.filter((char) => {
     const matchesSearch =
       char.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       char.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -28,10 +30,11 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
 
     const matchesTier =
       tierFilter === 'all' ||
-      (tierFilter === 'top' && char.tier === 'Верхний ярус') ||
-      (tierFilter === 'bottom' && char.tier === 'Нижний ярус') ||
+      (tierFilter === 'top' && char.tier === (language === 'en' ? 'Upper Tier' : 'Верхний ярус')) ||
+      (tierFilter === 'bottom' && char.tier === (language === 'en' ? 'Lower Tier' : 'Нижний ярус')) ||
       (tierFilter === 'other' &&
-        (char.tier === 'Нейтральная зона' || char.tier === 'За пределами кода'));
+        (char.tier === (language === 'en' ? 'Neutral Zone' : 'Нейтральная зона') ||
+          char.tier === (language === 'en' ? 'Beyond the Code' : 'За пределами кода')));
 
     return matchesSearch && matchesTier;
   });
@@ -47,7 +50,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             className="back-to-list-btn"
             onClick={() => setSelectedCharacterId(null)}
           >
-            <span>← Назад ко всем 15 персонажам</span>
+            <span>{t.backCharacters}</span>
           </button>
         </div>
 
@@ -82,7 +85,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
                 letterSpacing: '0.5px',
               }}
             >
-              Досье участника:
+              {t.dossier}
             </div>
             {selectedCharacter.bio}
           </div>
@@ -94,7 +97,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
           tagType="default"
           showSubbar
           onSubbarClick={(action) =>
-            onToast(`${selectedCharacter.name}: выбрано действие [${action}]`)
+            onToast(`${selectedCharacter.name}: ${language === 'en' ? 'selected action' : 'выбрано действие'} [${action}]`)
           }
         >
           <div
@@ -125,24 +128,24 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             className="toggle-history-btn"
             style={{ margin: 0, flex: 1, justifyContent: 'center' }}
             onClick={() => {
-              const curIdx = CHARACTERS_DATA.findIndex((c) => c.id === selectedCharacter.id);
-              const prevIdx = (curIdx - 1 + CHARACTERS_DATA.length) % CHARACTERS_DATA.length;
-              setSelectedCharacterId(CHARACTERS_DATA[prevIdx].id);
+              const curIdx = characters.findIndex((c) => c.id === selectedCharacter.id);
+              const prevIdx = (curIdx - 1 + characters.length) % characters.length;
+              setSelectedCharacterId(characters[prevIdx].id);
             }}
           >
-            <span>‹ Предыдущий</span>
+            <span>{t.previous}</span>
           </button>
           <button
             type="button"
             className="toggle-history-btn"
             style={{ margin: 0, flex: 1, justifyContent: 'center' }}
             onClick={() => {
-              const curIdx = CHARACTERS_DATA.findIndex((c) => c.id === selectedCharacter.id);
-              const nextIdx = (curIdx + 1) % CHARACTERS_DATA.length;
-              setSelectedCharacterId(CHARACTERS_DATA[nextIdx].id);
+              const curIdx = characters.findIndex((c) => c.id === selectedCharacter.id);
+              const nextIdx = (curIdx + 1) % characters.length;
+              setSelectedCharacterId(characters[nextIdx].id);
             }}
           >
-            <span>Следующий ›</span>
+            <span>{t.next}</span>
           </button>
         </div>
       </div>
@@ -153,12 +156,10 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
   return (
     <div className="page-container" style={{ width: '100%' }}>
       {/* Заголовок страницы в стиле плашки новеллы */}
-      <DialogueBox name="Персонажи (15)" tagType="default">
+      <DialogueBox name={language === 'en' ? 'Characters (15)' : 'Персонажи (15)'} tagType="default">
         <div className="characters-intro">
           <p style={{ fontSize: '14px', lineHeight: 1.5 }}>
-            Каждый из 15 участников обладает уникальным характером, историей и ролью в
-            попытке вырваться из Двухъярусной клетки. Нажмите на карточку любого персонажа,
-            чтобы открыть его полное досье и диалоговую реплику!
+            {t.charactersIntro}
           </p>
         </div>
       </DialogueBox>
@@ -169,7 +170,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
         <input
           type="text"
           className="characters-search-input"
-          placeholder="Поиск по имени, роли или локации..."
+          placeholder={t.searchPlaceholder}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
         />
@@ -213,7 +214,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             border: '1px solid var(--vn-blue-accent)',
           }}
         >
-          Все (15)
+          {t.filterAll}
         </button>
         <button
           type="button"
@@ -228,7 +229,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             border: '1px solid var(--vn-blue-accent)',
           }}
         >
-          Верхний ярус
+          {language === 'en' ? 'Upper Tier' : 'Верхний ярус'}
         </button>
         <button
           type="button"
@@ -243,7 +244,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             border: '1px solid var(--vn-blue-accent)',
           }}
         >
-          Нижний ярус
+          {language === 'en' ? 'Lower Tier' : 'Нижний ярус'}
         </button>
         <button
           type="button"
@@ -258,7 +259,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             border: '1px solid var(--vn-blue-accent)',
           }}
         >
-          Особые
+          {t.filterOther}
         </button>
       </div>
 
@@ -311,7 +312,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             fontStyle: 'italic',
           }}
         >
-          Персонажи по запросу «{searchQuery}» не найдены.
+          {t.notFound} «{searchQuery}» {t.notFoundEnd}
         </div>
       )}
     </div>

@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { VNChoiceButton } from './VNChoiceButton.tsx';
+import { useI18n } from '../i18n.tsx';
 
 export type PageId = 'home' | 'characters' | 'gallery' | 'endings' | 'about';
 
@@ -21,6 +22,7 @@ export const MenuModal: React.FC<MenuModalProps> = ({
   onClose,
   onNavigate,
 }) => {
+  const { t } = useI18n();
   if (!isOpen) return null;
 
   const handleSelect = (page: PageId) => {
@@ -28,35 +30,25 @@ export const MenuModal: React.FC<MenuModalProps> = ({
     onClose();
   };
 
-  const menuItems: { id: PageId; label: string; sublabel: string; icon: string }[] = [
+  const menuItems: { id: PageId; icon: string }[] = [
     {
       id: 'home',
-      label: '1. Главная (Лор и История)',
-      sublabel: 'Синопсис, предупреждение и хроника клетки',
       icon: '📖',
     },
     {
       id: 'characters',
-      label: '2. Персонажи (15)',
-      sublabel: 'Досье, цитаты и роли всех участников',
       icon: '👥',
     },
     {
       id: 'gallery',
-      label: '3. Галерея',
-      sublabel: 'Фоны, концепт-арты и эскизы локаций',
       icon: '🖼️',
     },
     {
       id: 'endings',
-      label: '4. Концовки',
-      sublabel: 'Все 4 финала со спойлер-фильтром',
       icon: '🔒',
     },
     {
       id: 'about',
-      label: '5. Об авторах и Факты',
-      sublabel: 'История создания и команда разработки',
       icon: '✨',
     },
   ];
@@ -70,24 +62,24 @@ export const MenuModal: React.FC<MenuModalProps> = ({
         <div className="modal-header-row">
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ fontSize: '20px' }}>🎀</span>
-            <span className="modal-title">Выберите ветку сюжета / раздел:</span>
+            <span className="modal-title">{t.menuTitle}</span>
           </div>
           <button
             type="button"
             className="modal-close-btn"
             onClick={onClose}
-            aria-label="Закрыть меню"
+            aria-label={t.closeMenu}
           >
             ✕
           </button>
         </div>
 
         <div className="menu-choices-stack">
-          {menuItems.map((item) => (
+          {menuItems.map((item, index) => (
             <VNChoiceButton
               key={item.id}
-              label={item.label}
-              sublabel={item.sublabel}
+              label={`${index + 1}. ${t.nav[index][0]}`}
+              sublabel={t.nav[index][1]}
               icon={<span>{item.icon}</span>}
               active={currentPage === item.id}
               onClick={() => handleSelect(item.id)}

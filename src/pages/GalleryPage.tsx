@@ -4,10 +4,13 @@
  */
 
 import React, { useState } from 'react';
-import { GALLERY_DATA, GalleryItem } from '../data/wikiData.ts';
+import { GalleryItem } from '../data/wikiData.ts';
 import { DialogueBox } from '../components/DialogueBox.tsx';
+import { getLocalizedData, useI18n } from '../i18n.tsx';
 
 export const GalleryPage: React.FC = () => {
+  const { language, t } = useI18n();
+  const { gallery } = getLocalizedData(language);
   const [activeItem, setActiveItem] = useState<GalleryItem | null>(null);
 
   const getCardIcon = (iconName: string) => {
@@ -32,19 +35,17 @@ export const GalleryPage: React.FC = () => {
   return (
     <div className="page-container">
       {/* Заголовок в стиле плашки новеллы */}
-      <DialogueBox name="Галерея" tagType="default">
+      <DialogueBox name={language === 'en' ? 'Gallery' : 'Галерея'} tagType="default">
         <div className="dialogue-text">
           <p>
-            Архив концептуальных артов, локаций и эскизов вселенной «Дк. (Двухъярусная
-            клетка)». Все материалы находятся в активной разработке. Нажмите на любую
-            карточку, чтобы рассмотреть концепт подробнее!
+            {t.galleryIntro}
           </p>
         </div>
       </DialogueBox>
 
       {/* Сетка из 6 карточек */}
       <div className="gallery-grid">
-        {GALLERY_DATA.map((item) => (
+        {gallery.map((item) => (
           <div
             key={item.id}
             className="gallery-card"
@@ -141,17 +142,17 @@ export const GalleryPage: React.FC = () => {
                   fontSize: '13px',
                 }}
               >
-                [Место под финальный игровой арт]
+                {t.artPlaceholder}
               </span>
             </div>
 
             <div className="preview-art-meta">
               <div style={{ display: 'flex', gap: '8px', marginBottom: '4px' }}>
-                <span className="dossier-tag">Категория: {activeItem.category}</span>
+                <span className="dossier-tag">{t.category} {activeItem.category}</span>
                 <span className="dossier-tag" style={{ color: 'var(--vn-pink-deep)' }}>
-                  Статус: {activeItem.status}
+                  {t.status} {activeItem.status}
                 </span>
-                <span className="dossier-tag">Формат: {activeItem.aspect}</span>
+                <span className="dossier-tag">{t.aspect} {activeItem.aspect}</span>
               </div>
               <p style={{ fontSize: '13.5px', lineHeight: 1.5, color: '#301b28' }}>
                 {activeItem.description}
@@ -164,7 +165,7 @@ export const GalleryPage: React.FC = () => {
               style={{ marginTop: '16px', justifyContent: 'center' }}
               onClick={() => setActiveItem(null)}
             >
-              <span>← Вернуться к галерее</span>
+              <span>{t.backGallery}</span>
             </button>
           </div>
         </div>

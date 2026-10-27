@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import { DialogueBox } from '../components/DialogueBox.tsx';
 import { VNChoiceButton } from '../components/VNChoiceButton.tsx';
 import { PageId } from '../components/MenuModal.tsx';
+import { useI18n } from '../i18n.tsx';
 
 interface HomePageProps {
   onNavigate: (page: PageId) => void;
@@ -15,19 +16,20 @@ interface HomePageProps {
 
 export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onToast }) => {
   const [isLoreExpanded, setIsLoreExpanded] = useState(false);
+  const { t } = useI18n();
 
   return (
     <div className="page-container">
       {/* Приветственный заголовок */}
       <div className="welcome-header">
-        <h2 className="welcome-title">Добро пожаловать на официальный сайт по дк.!</h2>
+        <h2 className="welcome-title">{t.homeWelcome}</h2>
         <p className="welcome-subtitle">
-          Психологическая визуальная новелла о границах реальности и цифровой клетке
+          {t.homeSubtitle}
         </p>
       </div>
 
       <div className="dialogue-wrapper" style={{ marginTop: '16px' }}>
-  <div className="dialogue-nameplate">🎬 Официальный тизер-интро</div>
+  <div className="dialogue-nameplate">🎬 {t.teaser}</div>
   <div className="dialogue-box" style={{ padding: '12px' }}>
     <div
       style={{
@@ -53,7 +55,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onToast }) => {
           display: 'block',
         }}
       >
-        Ваш браузер не поддерживает видео.
+        {t.videoUnsupported}
       </video>
     </div>
     <p
@@ -64,89 +66,60 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onToast }) => {
         marginTop: '8px',
       }}
     >
-      Тизер разрабатываемой визуальной новеллы «Дк. (Двухъярусная клетка)»
+      {t.teaserCaption}
     </p>
   </div>
 </div>
 
       {/* Блок «Синопсис» в стиле диалогового окна */}
       <DialogueBox
-        name="Синопсис"
+        name={t.synopsis}
         tagType="default"
         showSubbar
-        onSubbarClick={(action) => onToast(`Действие новеллы: [${action}] сохранено`)}
+        onSubbarClick={(action) => onToast(`${t.savedAction}: [${action}] ${t.actionSaved}`)}
       >
         <div className="dialogue-text">
           <p>
-            <strong>Дк. (Двухъярусная клетка)</strong> — это игра, которая рассказывает о
-            истории, как персонажи попали в игру и пытаются из неё выбраться.
+            <strong>{t.appTitle}</strong>{t.synopsisOne}
           </p>
-          <p>
-            Внезапно очнувшись в замкнутом пространстве, разделённом на Верхний и Нижний
-            ярусы, 15 героев осознают, что каждый их шаг подчиняется загадочным
-            диалоговым окнам, а за пределами видимых стен пульсирует строчка программного
-            кода.
-          </p>
+          <p>{t.synopsisTwo}</p>
         </div>
       </DialogueBox>
 
       {/* Акцентный блок с плашкой «ВНИМАНИЕ!» */}
-      <DialogueBox name="ВНИМАНИЕ!" tagType="alert">
+      <DialogueBox name={t.warning} tagType="alert">
         <div className="dialogue-text" style={{ fontWeight: 600 }}>
-          <p>
-            Игра в разработке, следите за новостями! (Все совпадения случайны, пока такой игры не существует).
-          </p>
+          <p>{t.devNotice}</p>
           <p style={{ fontSize: '13px', color: 'var(--vn-pink-deep)', marginTop: '6px' }}>
-            🔔 Подпишитесь на официальные каналы проекта внизу страницы, чтобы первыми узнать о релизе демо-версии.
+            {t.subscribeNotice}
           </p>
         </div>
       </DialogueBox>
 
       {/* Секция «История / Лор»: большой текстовый блок в стиле новеллы */}
       <DialogueBox
-        name="История / Лор"
+        name={t.lore}
         tagType="default"
         showSubbar
-        onSubbarClick={(action) => onToast(`История новеллы: [${action}] активирован`)}
+        onSubbarClick={(action) => onToast(`${t.historyAction}: [${action}] ${t.activated}`)}
       >
         <div className="dialogue-text">
-          <p>
-            Сначала всё казалось обычным сном. Тихое мерцание флуоресцентных ламп, холодные
-            металлические перекладины двухъярусных каркасов и полное отсутствие дверей наружу.
-            Никто из пятнадцати участников не помнил момент своего прибытия сюда — в памяти
-            остались лишь размытые силуэты прежней жизни и настойчивый шелест переворачиваемых
-            страниц.
-          </p>
+          <p>{t.loreOne}</p>
 
           <p>
-            На стене верхнего яруса красовалась небрежная надпись, выведенная розовым маркером:
-            <em>«Игра началась. Ваши реплики уже записаны. Не заставляйте Читателя ждать слишком долго».</em>{' '}
-            Тэни первым попытался коснуться светящейся надписи, но его пальцы наткнулись на
-            невидимую гладкую преграду — словно монитор старого кинескопа отделял этот мир от
-            истинной реальности.
+            {t.loreTwoStart} <em>{t.loreQuote}</em> {t.loreTwoEnd}
           </p>
 
           {isLoreExpanded && (
             <>
-              <p>
-                Со временем персонажи стали замечать странные закономерности. Когда Гони
-                пытался сломать решётки нижнего уровня, пространство вокруг него рябило, а в
-                ушах звенел знакомый щелчок компьютерной мыши. Любопытная Эль утверждала, что в
-                моменты глубокой тишины можно услышать, как чей-то палец скроллит текст,
-                перематывая их собственные мысли.
-              </p>
+              <p>{t.loreThree}</p>
 
-              <p>
-                Два яруса клетки оказались не просто архитектурной причудой. Верхний ярус был
-                зоной наблюдения и логики, а Нижний — архивом забытых черновиков и удалённых
-                сцен. Чтобы совершить побег, им предстоит преодолеть разделение, разгадать
-                тайну исчезающих строк и найти того, кто держит в руках главное меню.
-              </p>
+              <p>{t.loreFour}</p>
             </>
           )}
 
           <div className="history-placeholder-note">
-            [Место для большого текста истории, который скоро напишет автор]
+            {t.lorePlaceholder}
           </div>
 
           <button
@@ -154,7 +127,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onToast }) => {
             className="toggle-history-btn"
             onClick={() => setIsLoreExpanded(!isLoreExpanded)}
           >
-            <span>{isLoreExpanded ? '▲ Свернуть хронику' : '▼ Читать полностью (Хроника клетки)'}</span>
+            <span>{isLoreExpanded ? t.collapseLore : t.expandLore}</span>
           </button>
         </div>
       </DialogueBox>
@@ -174,26 +147,26 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onToast }) => {
           }}
         >
           <span>🌸</span>
-          <span>Быстрый выбор следующего действия:</span>
+          <span>{t.quickAction}</span>
         </div>
 
         <div className="quick-nav-grid">
           <VNChoiceButton
-            label="Перейти к списку персонажей (15)"
-            sublabel="Изучить досье, цитаты и роли узников клетки"
+            label={t.quickCharacters}
+            sublabel={t.quickCharactersSub}
             icon={<span>👥</span>}
             primary
             onClick={() => onNavigate('characters')}
           />
           <VNChoiceButton
-            label="Открыть галерею артов и фонов"
-            sublabel="Взглянуть на концепты локаций и эскизы"
+            label={t.quickGallery}
+            sublabel={t.quickGallerySub}
             icon={<span>🖼️</span>}
             onClick={() => onNavigate('gallery')}
           />
           <VNChoiceButton
-            label="Изучить возможные концовки игры"
-            sublabel="4 варианта финала под спойлер-фильтром"
+            label={t.quickEndings}
+            sublabel={t.quickEndingsSub}
             icon={<span>🔒</span>}
             onClick={() => onNavigate('endings')}
           />

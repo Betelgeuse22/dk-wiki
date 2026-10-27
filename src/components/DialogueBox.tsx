@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { useI18n } from '../i18n.tsx';
 
 interface DialogueBoxProps {
   name?: string;
@@ -31,6 +32,7 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
   showSubbar = false,
   onSubbarClick,
 }) => {
+  const { t } = useI18n();
   const getTagClass = () => {
     switch (tagType) {
       case 'alert':
@@ -62,38 +64,38 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
           <div className="vn-subbar">
             <span
               className="vn-subbar-item"
-              onClick={() => handleSubbarAction('История')}
-              title="Открыть историю реплик"
+              onClick={() => handleSubbarAction(t.actionHistory)}
+              title={t.historyTitle}
             >
-              История
+              {t.actionHistory}
             </span>
             <span
               className="vn-subbar-item"
-              onClick={() => handleSubbarAction('Пропуск')}
-              title="Пропустить текст"
+              onClick={() => handleSubbarAction(t.actionSkip)}
+              title={t.skipTitle}
             >
-              Пропуск
+              {t.actionSkip}
             </span>
             <span
               className="vn-subbar-item"
-              onClick={() => handleSubbarAction('Авто')}
-              title="Автоматическая прокрутка"
+              onClick={() => handleSubbarAction(t.actionAuto)}
+              title={t.autoTitle}
             >
-              Авто
+              {t.actionAuto}
             </span>
             <span
               className="vn-subbar-item"
-              onClick={() => handleSubbarAction('Сохранить')}
-              title="Быстрое сохранение"
+              onClick={() => handleSubbarAction(t.actionSave)}
+              title={t.saveTitle}
             >
-              Сохранить
+              {t.actionSave}
             </span>
             <span
               className="vn-subbar-item"
-              onClick={() => handleSubbarAction('Загрузить')}
-              title="Загрузить состояние"
+              onClick={() => handleSubbarAction(t.actionLoad)}
+              title={t.loadTitle}
             >
-              Загрузить
+              {t.actionLoad}
             </span>
           </div>
         )}

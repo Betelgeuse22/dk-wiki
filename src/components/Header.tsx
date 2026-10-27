@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { useI18n } from '../i18n.tsx';
 
 interface HeaderProps {
   onOpenMenu: () => void;
@@ -19,6 +20,8 @@ export const Header: React.FC<HeaderProps> = ({
   isDarkMode,
   onToggleTheme,
 }) => {
+  const { language, setLanguage, t } = useI18n();
+
   return (
     // Единая "липкая" обёртка для статус-бара и шапки
     <div style={{ position: 'sticky', top: 0, zIndex: 50 }}>
@@ -27,27 +30,35 @@ export const Header: React.FC<HeaderProps> = ({
       <div className="tg-status-bar">
         <span className="tg-badge">
           <span>●</span>
-          <span>Telegram Mini App • Online</span>
+          <span>{t.online}</span>
         </span>
-        <span>Версия 1.0 (Demo)</span>
+        <span>{t.version}</span>
       </div>
 
       {/* Основная шапка сайта */}
       <header className="app-header" style={{ position: 'static' }}>
-        <div className="header-brand" onClick={onGoHome} title="На главную">
-          <h1 className="header-title">Дк. (Двухъярусная клетка)</h1>
-          <span className="header-subtitle">Официальная интерактивная Wiki</span>
+        <div className="header-brand" onClick={onGoHome} title={t.homeTitle}>
+          <h1 className="header-title">{t.appTitle}</h1>
+          <span className="header-subtitle">{t.wikiSubtitle}</span>
         </div>
 
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button
+            type="button"
+            className="header-menu-btn header-icon-btn"
+            onClick={() => setLanguage(language === 'ru' ? 'en' : 'ru')}
+            aria-label={language === 'ru' ? t.switchToEnglish : t.switchToRussian}
+            title={language === 'ru' ? t.switchToEnglish : t.switchToRussian}
+          >
+            {language === 'ru' ? 'RU' : 'ENG'}
+          </button>
           {/* Кнопка переключения темы (Светлая / Тёмная) */}
           <button
             type="button"
-            className="header-menu-btn"
+            className="header-menu-btn header-icon-btn"
             onClick={onToggleTheme}
-            aria-label="Переключить тему"
-            title={isDarkMode ? 'Включить светлую тему' : 'Включить тёмную тему'}
-            style={{ padding: '8px 10px', fontSize: '16px' }}
+            aria-label={t.themeLabel}
+            title={isDarkMode ? t.lightTheme : t.darkTheme}
           >
             {isDarkMode ? '☀️' : '🌙'}
           </button>
@@ -57,10 +68,10 @@ export const Header: React.FC<HeaderProps> = ({
             type="button"
             className="header-menu-btn"
             onClick={onOpenMenu}
-            aria-label="Открыть меню разделов"
+            aria-label={t.openMenu}
           >
             <span>☰</span>
-            <span>Меню</span>
+            <span>{t.menu}</span>
           </button>
         </div>
       </header>
