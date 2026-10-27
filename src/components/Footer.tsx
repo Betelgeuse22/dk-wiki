@@ -17,6 +17,7 @@ export const Footer: React.FC = () => {
           href="#telegram"
           className="social-link-btn"
           title="Официальный Telegram-канал"
+          target="_blank"
           onClick={(e) => {
             e.preventDefault();
             alert('Ссылка-заглушка: Здесь будет подключен официальный Telegram-канал проекта «Дк.»!');
@@ -27,13 +28,10 @@ export const Footer: React.FC = () => {
         </a>
 
         <a
-          href="#tiktok"
+          href="https://www.tiktok.com/@twotier.cage"
           className="social-link-btn"
           title="TikTok проекта"
-          onClick={(e) => {
-            e.preventDefault();
-            alert('Ссылка-заглушка: Здесь будет подключен TikTok проекта «Дк.» с тизерами и анимациями!');
-          }}
+          target="_blank"
         >
           <span>🎵</span>
           <span>TikTok</span>
@@ -43,6 +41,7 @@ export const Footer: React.FC = () => {
           href="#youtube"
           className="social-link-btn"
           title="YouTube канал"
+          target="_blank"
           onClick={(e) => {
             e.preventDefault();
             alert('Ссылка-заглушка: Здесь будет подключен YouTube-канал проекта «Дк.» с трейлерами и саундтреком!');

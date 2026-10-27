@@ -26,6 +26,49 @@ export const HomePage: React.FC<HomePageProps> = ({ onNavigate, onToast }) => {
         </p>
       </div>
 
+      <div className="dialogue-wrapper" style={{ marginTop: '16px' }}>
+  <div className="dialogue-nameplate">🎬 Официальный тизер-интро</div>
+  <div className="dialogue-box" style={{ padding: '12px' }}>
+    <div
+      style={{
+        width: '100%',
+        borderRadius: '12px',
+        overflow: 'hidden',
+        background: '#090d16', /* Тёмный фон по бокам, если видео узкое */
+        border: '2px solid var(--vn-blue-accent)',
+        position: 'relative',
+        aspectRatio: '9 / 16', /* Вертикальный формат 9:16 под TikTok */
+        maxHeight: '480px',    /* Ограничение по высоте, чтобы не было слишком длинным */
+        margin: '0 auto',
+      }}
+    >
+      <video
+        src="/videos/intro.mp4"
+        controls
+        playsInline
+        style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'contain', /* <--- Главное исправление: видео целиком, без обрезки! */
+          display: 'block',
+        }}
+      >
+        Ваш браузер не поддерживает видео.
+      </video>
+    </div>
+    <p
+      style={{
+        fontSize: '12px',
+        color: 'var(--vn-text-muted)',
+        textAlign: 'center',
+        marginTop: '8px',
+      }}
+    >
+      Тизер разрабатываемой визуальной новеллы «Дк. (Двухъярусная клетка)»
+    </p>
+  </div>
+</div>
+
       {/* Блок «Синопсис» в стиле диалогового окна */}
       <DialogueBox
         name="Синопсис"
