@@ -4,7 +4,7 @@
  */
 
 import React, { useState } from 'react';
-import { CHARACTERS_DATA, Character } from '../data/wikiData.ts';
+import { CHARACTERS_DATA } from '../data/wikiData.ts';
 import { DialogueBox } from '../components/DialogueBox.tsx';
 import { CharacterAvatar } from '../components/CharacterAvatar.tsx';
 
@@ -30,7 +30,8 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
       tierFilter === 'all' ||
       (tierFilter === 'top' && char.tier === 'Верхний ярус') ||
       (tierFilter === 'bottom' && char.tier === 'Нижний ярус') ||
-      (tierFilter === 'other' && (char.tier === 'Нейтральная зона' || char.tier === 'За пределами кода'));
+      (tierFilter === 'other' &&
+        (char.tier === 'Нейтральная зона' || char.tier === 'За пределами кода'));
 
     return matchesSearch && matchesTier;
   });
@@ -38,7 +39,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
   // Если выбран персонаж, показываем детальное досье
   if (selectedCharacter) {
     return (
-      <div className="page-container character-dossier-view">
+      <div className="page-container character-dossier-view" style={{ width: '100%' }}>
         {/* Кнопка возврата к общему списку */}
         <div className="back-btn-row">
           <button
@@ -51,7 +52,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
         </div>
 
         {/* Верхняя карточка: Арт, Статус, Роль и Биография */}
-        <div className="dossier-art-card">
+        <div className="dossier-art-card" style={{ width: '100%' }}>
           <div className="dossier-portrait-wrap">
             <CharacterAvatar
               id={selectedCharacter.id}
@@ -68,11 +69,6 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             <span className="dossier-tag" style={{ color: selectedCharacter.color }}>
               ● {selectedCharacter.status}
             </span>
-            {selectedCharacter.traits.map((t, idx) => (
-              <span key={idx} className="dossier-tag">
-                #{t}
-              </span>
-            ))}
           </div>
 
           <div className="dossier-bio-text">
@@ -80,7 +76,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
               style={{
                 fontSize: '12px',
                 fontWeight: 700,
-                color: 'var(--vn-pink-deep)',
+                color: 'var(--vn-blue-deep)',
                 marginBottom: '4px',
                 textTransform: 'uppercase',
                 letterSpacing: '0.5px',
@@ -92,7 +88,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
           </div>
         </div>
 
-        {/* Внизу: диалоговое окно в горошек с плашкой имени и характерной цитатой */}
+        {/* Внизу: диалоговое окно с плашкой имени и характерной цитатой */}
         <DialogueBox
           name={selectedCharacter.name}
           tagType="default"
@@ -106,7 +102,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
               fontSize: '15px',
               fontStyle: 'italic',
               fontWeight: 600,
-              color: '#301b28',
+              color: 'var(--vn-text-main)',
               lineHeight: 1.6,
             }}
           >
@@ -118,6 +114,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
         <div
           style={{
             display: 'flex',
+            width: '100%',
             justifyContent: 'space-between',
             gap: '10px',
             marginTop: '4px',
@@ -154,7 +151,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
 
   // Общий список из 15 персонажей
   return (
-    <div className="page-container">
+    <div className="page-container" style={{ width: '100%' }}>
       {/* Заголовок страницы в стиле плашки новеллы */}
       <DialogueBox name="Персонажи (15)" tagType="default">
         <div className="characters-intro">
@@ -184,7 +181,7 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: 'var(--vn-pink-deep)',
+              color: 'var(--vn-blue-deep)',
               fontWeight: 700,
             }}
           >
@@ -211,9 +208,9 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             cursor: 'pointer',
             padding: '6px 12px',
             borderRadius: '10px',
-            background: tierFilter === 'all' ? 'var(--vn-pink-deep)' : 'var(--vn-pink-light)',
-            color: tierFilter === 'all' ? '#ffffff' : 'var(--vn-pink-deep)',
-            border: '1px solid var(--vn-pink-accent)',
+            background: tierFilter === 'all' ? 'var(--vn-blue-deep)' : 'var(--vn-blue-light)',
+            color: tierFilter === 'all' ? '#ffffff' : 'var(--vn-blue-deep)',
+            border: '1px solid var(--vn-blue-accent)',
           }}
         >
           Все (15)
@@ -226,9 +223,9 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             cursor: 'pointer',
             padding: '6px 12px',
             borderRadius: '10px',
-            background: tierFilter === 'top' ? 'var(--vn-pink-deep)' : 'var(--vn-pink-light)',
-            color: tierFilter === 'top' ? '#ffffff' : 'var(--vn-pink-deep)',
-            border: '1px solid var(--vn-pink-accent)',
+            background: tierFilter === 'top' ? 'var(--vn-blue-deep)' : 'var(--vn-blue-light)',
+            color: tierFilter === 'top' ? '#ffffff' : 'var(--vn-blue-deep)',
+            border: '1px solid var(--vn-blue-accent)',
           }}
         >
           Верхний ярус
@@ -241,9 +238,9 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             cursor: 'pointer',
             padding: '6px 12px',
             borderRadius: '10px',
-            background: tierFilter === 'bottom' ? 'var(--vn-pink-deep)' : 'var(--vn-pink-light)',
-            color: tierFilter === 'bottom' ? '#ffffff' : 'var(--vn-pink-deep)',
-            border: '1px solid var(--vn-pink-accent)',
+            background: tierFilter === 'bottom' ? 'var(--vn-blue-deep)' : 'var(--vn-blue-light)',
+            color: tierFilter === 'bottom' ? '#ffffff' : 'var(--vn-blue-deep)',
+            border: '1px solid var(--vn-blue-accent)',
           }}
         >
           Нижний ярус
@@ -256,9 +253,9 @@ export const CharactersPage: React.FC<CharactersPageProps> = ({ onToast }) => {
             cursor: 'pointer',
             padding: '6px 12px',
             borderRadius: '10px',
-            background: tierFilter === 'other' ? 'var(--vn-pink-deep)' : 'var(--vn-pink-light)',
-            color: tierFilter === 'other' ? '#ffffff' : 'var(--vn-pink-deep)',
-            border: '1px solid var(--vn-pink-accent)',
+            background: tierFilter === 'other' ? 'var(--vn-blue-deep)' : 'var(--vn-blue-light)',
+            color: tierFilter === 'other' ? '#ffffff' : 'var(--vn-blue-deep)',
+            border: '1px solid var(--vn-blue-accent)',
           }}
         >
           Особые
