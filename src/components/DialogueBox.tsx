@@ -60,7 +60,7 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
       <div className="dialogue-box">
         {children}
 
-        {showSubbar && (
+        {/* {showSubbar && (
           <div className="vn-subbar">
             <span
               className="vn-subbar-item"
@@ -98,7 +98,7 @@ export const DialogueBox: React.FC<DialogueBoxProps> = ({
               {t.actionLoad}
             </span>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );

@@ -41,9 +41,17 @@ export const AboutPage: React.FC = () => {
         <div className="team-list">
           {team.map((member) => (
             <div key={member.id} className="team-card">
-              <div className="team-avatar-box">
-                <span>{member.avatarText}</span>
-              </div>
+              <div className="team-avatar-container">
+                {member.avatarUrl ? (
+                                 <img 
+      src={member.avatarUrl} 
+      alt={member.name} 
+      className="team-avatar-img" 
+    />
+  ) : (
+    <div className="team-avatar-text">{member.avatarText}</div>
+  )}
+</div>
               <div className="team-info">
                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
                   <span className="team-name">{member.name}</span>

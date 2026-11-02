@@ -190,18 +190,31 @@ export const CharacterAvatar: React.FC<CharacterAvatarProps> = ({
         );
 
       case 'alyona':
-        return (
-          <>
-            {/* Алёна - длинные прямые волосы и ободок */}
-            <circle cx="50" cy="42" r="20" fill="#ffe8df" />
-            <path d="M24 50 L24 28 C24 18 36 16 50 16 C64 16 76 18 76 28 L76 50 C70 34 62 30 50 30 C38 30 30 34 24 50 Z" fill={color} />
-            {/* Ободок */}
-            <path d="M28 34 C28 20 72 20 72 34" stroke="#ffffff" strokeWidth="2.5" fill="none" />
-            <path d="M26 84 C26 64 36 60 50 60 C64 60 74 64 74 84 Z" fill={color} />
-            <circle cx="43" cy="42" r="2.5" fill="#301b28" />
-            <circle cx="57" cy="42" r="2.5" fill="#301b28" />
-          </>
-        );
+  return (
+    <>
+      <circle cx="50" cy="42" r="20" fill="#ffe8df" />
+      <path 
+        d="M24 50 L24 28 C24 18 36 16 50 16 C64 16 76 18 76 28 L76 50 C70 34 62 30 50 30 C38 30 30 34 24 50 Z" 
+        fill={color} 
+        stroke="#CBD5E1" 
+        strokeWidth="1.5" 
+      />
+      <path 
+        d="M28 34 C28 20 72 20 72 34" 
+        stroke="#301b28" 
+        strokeWidth="2.5" 
+        fill="none" 
+      />
+      <path 
+        d="M26 84 C26 64 36 60 50 60 C64 60 74 64 74 84 Z" 
+        fill={color} 
+        stroke="#CBD5E1" 
+        strokeWidth="1.5" 
+      />
+      <circle cx="43" cy="42" r="2.5" fill="#301b28" />
+      <circle cx="57" cy="42" r="2.5" fill="#301b28" />
+    </>
+  );
 
       case 'alesya':
         return (
